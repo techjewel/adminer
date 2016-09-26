@@ -383,7 +383,8 @@ p code + a:visited:hover {
 #tables a.active + a {
 	background: #fff;
 	color: #2e84e4;
-	border: 1px solid #ff7374;
+	border: 1px solid #ff7374 !important;
+	border-right: 0px;
 }
 
 #tables a.active{
