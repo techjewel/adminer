@@ -247,13 +247,14 @@ p code + a:visited:hover {
 #menu h1 {
 	background: none left top no-repeat;
 	background-image: url(authlab_logo.png);
-	line-height: 50px;
+	line-height: 10px;
 	padding-left: 50px;
 	padding-top: 9px;
 	text-transform: lowercase;
 	margin: 25px 0 10px 16px;
 	background-size: contain;
 	text-indent: -9999999px;
+	max-width: 50px;
 }
 
 #menu h1 a {
@@ -314,6 +315,13 @@ p code + a:visited:hover {
 	background: #fff;
 	color: #000;
 }
+#tables a.active.select {
+    border-right: none !important;
+}
+
+#tables a.select:hover {
+	border-right: none !important;
+}
 
 #content p.links {
 	margin: -10px 0 15px;
@@ -345,7 +353,8 @@ p code + a:visited:hover {
 	left: 15px;
 	right: 15px;
 	bottom: 0;
-	top: 220px;o
+	top: 150px;
+	o
 	overflow: hidden !important;
 	overflow-y: auto !important;
 }
@@ -384,12 +393,13 @@ p code + a:visited:hover {
 	background: #fff;
 	color: #2e84e4;
 	border: 1px solid #ff7374 !important;
-	border-right: 0px;
+	border-right: 1px solid #ff7374;
 }
 
 #tables a.active{
 	font-weight: bold;
 	border-right: none;
+	border-right: none !important;
 }
 
 
