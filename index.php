@@ -10,7 +10,7 @@ function adminer_object()
     }
 
     $plugins = [
-        new loadDependencies, // Always load it first.
+        new LoadDependencies, // Always load it first.
         new AdminerDatabaseHide([
             'information_schema',
             'mysql',
