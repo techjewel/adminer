@@ -4,6 +4,6 @@ class AdminerMenuScroller
 {
     public function head()
     {
-        echo '<script src="/js/menuScroller.js"></script>';
+        echo '<script'.nonce().'src="/js/menuScroller.js"></script>';
     }
 }

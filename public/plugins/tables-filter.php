@@ -10,16 +10,16 @@ class AdminerTablesFilter {
 	function tablesPrint($tables) { ?>
 <p class="jsonly">
 <form action style="border: 1px solid #dae8fa; padding: 10px;">
-<input id="filter-field" onkeyup="tablesFilterInput();" autocomplete="off" style="width: 100%; border: 1px solid #dae8fa; border-radius: 3px;" placeholder="filter tables...">
+<input id="filter-field" autocomplete="off" style="width: 100%; border: 1px solid #dae8fa; border-radius: 3px;" placeholder="filter tables...">
 </form>
-<ul id='tables' onmouseover='menuOver(this, event);' onmouseout='menuOut(this);'>
+<ul id='tables'>
 <?php
 foreach ($tables as $table => $type) {
 	echo '<li data-table-name="'.h($table).'"><a href="'.h(ME).'select='.urlencode($table).'"'.bold($_GET["select"] == $table)." class='select' data-spanking='true'>".lang('select')."</a> ";
 	echo '<a href="'.h(ME).'table='.urlencode($table).'"'.bold($_GET["table"] == $table)." class='structure' title='Show structure'>".h($table)."</a><br></li>\n";
 }
 ?>
-<script type="text/javascript">
+<script <?php echo nonce(); ?> type="text/javascript">
 var tablesFilterTimeout = null;
 var tablesFilterValue = '';
 
@@ -64,6 +64,13 @@ if (sessionStorage){
 	}
 	sessionStorage.setItem('adminer_tables_filter_db', db);
 }
+
+mixin(qs('#tables'), {onmouseover: menuOver, onmouseout: menuOut});
+
+$('#filter-field').keyup(function () {
+    tablesFilterInput();
+});
+
 </script>
 <?php
 		return true;
