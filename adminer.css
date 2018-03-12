@@ -773,9 +773,7 @@
  }
  
  .footer {
-     min-width: 5304px;
      background: white;
-     /* position: fixed; */
      border-top-width: 10px;
  }
  
@@ -787,11 +785,11 @@
      display: none;
  }
  
- #table thead {
-     /*visibility: hidden;*/
- }
- 
  .json {
      font-size: 12px !important;
+ }
+ 
+ .json-icon {
+     margin-right: 5px;
  }
  
