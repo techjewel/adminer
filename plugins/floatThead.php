@@ -4,38 +4,39 @@ class AdminerFloatThead
 {
     public function head()
     {
-        echo '<script'.nonce().'src="/js/jquery.floatThead.js"></script>';
-        
-        ?>
+        echo '<script'.nonce().'src="/js/jquery.floatThead.js"></script>'; ?>
 
         <script <?php echo nonce(); ?> type="text/javascript">
-        		$(document).ready(function () {
-        			$table = $('#content table').first();
+            $(document).ready(function () {
+                var $table = $('#content table').first();
 
-        			var $window = $(window);
+                var tablePosition = $table.offset().top;
 
-        			function handleFloatHead() {
-        				if ($window.scrollTop() > 240) {
-        					$table.floatThead({ position: 'absolute' });
-        				} else {
-        					$table.floatThead('destroy');
-        				}
-        			}
+                var $window = $(window);
 
-        			handleFloatHead();
+                var initFloatHead = false;
 
-        			$window.scroll(function () {
-        				handleFloatHead();
-        			})
-        		});
+                function handleFloatHead() {
+                    var screenPosition = tablePosition - $window.scrollTop();
+
+                    if (screenPosition <= 0 && !initFloatHead) {
+                        $table.floatThead({ position: 'absolute' });
+                            
+                        initFloatHead = true;
+                    } else if (screenPosition > 0 && initFloatHead) {
+                        $table.floatThead('destroy');
+
+                        initFloatHead = false;
+                    }
+                }
+
+                handleFloatHead();
+
+                $window.scroll(function () {
+                    handleFloatHead();
+                })
+            });
         </script>
-
-        <style type="text/css">
-    		.floatThead-container { 
-    			/*overflow: visible !important;*/
-    		}
-    	</style>
-        
         <?php
     }
 }
