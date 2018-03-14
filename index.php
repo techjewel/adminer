@@ -25,6 +25,7 @@ function adminer_object()
         new AdminerMenuScroller,
         new AdminerJsonPreview,
         new AdminerCollations,
+        new FixedFooter,
     ];
 
     class AdminerCustomized extends AdminerPlugin

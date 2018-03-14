@@ -779,6 +779,31 @@
  
  .footer div {
      padding-bottom: 0;
+     display: inline-block;
+ }
+ 
+ div.footer-import {
+     margin-left: 5px;
+     vertical-align: top;
+     padding: 0 5px;
+     background-color: #f5f5f5;
+ }
+ 
+ .footer-import a {
+     padding: 5px;
+     display: inline-block;
+     color: black;
+     text-decoration: underline
+ }
+ 
+ .footer-import a:active,
+ .footer-import a:focus,
+ .footer-import a:hover {
+     color: black;
+ }
+ 
+ .footer-import input[type=file] {
+     width: 160px;
  }
  
  .loadmore {

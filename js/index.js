@@ -1,5 +1,5 @@
 $(document).ready(function() {
     $('.footer').css({
-        minWidth: $('#table').width() + 'px'
+        minWidth: $('#content table').first().width() + 1 + 'px'
     });
 });
