@@ -12,7 +12,7 @@ class FixedFooter
                 if ($footer.length) {
                     var tableEndPos = $footer.offset().top;
                 
-                    $footer.css({ position: 'fixed'});
+                    // $footer.css({ position: 'fixed'});
                 
                     if ($(window).height() > tableEndPos) {
                         $footer.css({ top: tableEndPos + 'px' });
