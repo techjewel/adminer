@@ -9,8 +9,8 @@
 class AdminerTablesFilter {
 	function tablesPrint($tables) { ?>
 <p class="jsonly">
-<form action style="border: 1px solid #dae8fa; padding: 10px;">
-<input id="filter-field" autocomplete="off" style="width: 100%; border: 1px solid #dae8fa; border-radius: 3px;" placeholder="filter tables...">
+<form action style="padding: 0 10px;">
+<input id="filter-field" autocomplete="off" style="width: 100%; border-radius: 5px;" placeholder="filter tables...">
 </form>
 <ul id='tables'>
 <?php
