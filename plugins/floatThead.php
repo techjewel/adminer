@@ -1,42 +1,26 @@
 <?php
 
-class AdminerFloatThead
-{
-    public function head()
-    {
-        echo '<script'.nonce().'src="/js/jquery.floatThead.js"></script>'; ?>
+class AdminerFloatThead {
 
-        <script <?php echo nonce(); ?> type="text/javascript">
-            $(document).ready(function () {
-                var $table = $('#content table').first();
+	private $pathToJquery;
+	private $pathToFloatThead;
 
-                var tablePosition = $table.offset().top;
+	/**
+	 * @param string $pathToJquery Path to jquery js library. Can be url, filesystem relative path related to the adminer directory or null (if jquery is provided by another plugin).
+	 * @param string $pathToFloatThead Path to floatThead js library. Can be url or filesystem relative path related to the adminer directory.
+	 */
+	public function __construct($pathToJquery='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js',
+		$pathToFloatThead='https://cdnjs.cloudflare.com/ajax/libs/floatthead/2.0.3/jquery.floatThead.min.js') {
+		$this->pathToJquery = $pathToJquery;
+		$this->pathToFloatThead = $pathToFloatThead;
+	}
 
-                var $window = $(window);
-
-                var initFloatHead = false;
-
-                function handleFloatHead() {
-                    var screenPosition = tablePosition - $window.scrollTop();
-
-                    if (screenPosition <= 0 && !initFloatHead) {
-                        $table.floatThead({ position: 'absolute' });
-                            
-                        initFloatHead = true;
-                    } else if (screenPosition > 0 && initFloatHead) {
-                        $table.floatThead('destroy');
-
-                        initFloatHead = false;
-                    }
-                }
-
-                handleFloatHead();
-
-                $window.scroll(function () {
-                    handleFloatHead();
-                })
-            });
-        </script>
-        <?php
-    }
+	public function head() {
+		if ($this->pathToJquery) {
+			echo '<script src="'.h($this->pathToJquery).'"></script>';
+		}
+		echo '<script src="'.h($this->pathToFloatThead).'"></script>';
+		echo '<script>$(document).ready(function() { $(\'#content table\').first().floatThead(); });</script>';
+		echo '<style type="text/css">.floatThead-container { overflow: visible !important; }</style>';
+	}
 }

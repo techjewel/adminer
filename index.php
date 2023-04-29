@@ -1,4 +1,9 @@
 <?php
+
+error_reporting(0);
+ini_set('display_errors', 0);
+
+
 function adminer_object()
 {
     // required to run any plugin
@@ -10,7 +15,6 @@ function adminer_object()
     }
 
     $plugins = [
-        new LoadDependencies, // Always load it first.
         new AdminerDatabaseHide([
             'information_schema',
             'mysql',
@@ -25,7 +29,6 @@ function adminer_object()
         new AdminerMenuScroller,
         new AdminerJsonPreview,
         new AdminerCollations,
-        new FixedFooter,
     ];
 
     class AdminerCustomized extends AdminerPlugin
@@ -38,12 +41,12 @@ function adminer_object()
 
         function credentials()
         {
-            return ['localhost', 'root', 'root'];
+            return ['127.0.0.1', 'root', ''];
         }
 
         function login($login, $password)
         {
-            return ($login == 'root' && $password == 'root');
+            return ($login == 'root' && $password == '');
         }
     }
 
@@ -51,4 +54,4 @@ function adminer_object()
 }
 
 // include original Adminer or Adminer Editor
-include "./adminer.php";
+include "./adminer-8.php";

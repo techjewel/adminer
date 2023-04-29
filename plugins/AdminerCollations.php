@@ -3,95 +3,100 @@
 /**
  * Custom character sets in collation select boxes.
  *
- * @link https://github.com/pematon/adminer-plugins
- *
  * @author Peter Knut
- * @copyright 2015-2018 Pematon, s.r.o. (http://www.pematon.com/)
+ * @copyright 2015 Pematon, s.r.o. (http://www.pematon.com/)
  */
 class AdminerCollations
 {
-    /** @var array */
-    private $characterSets;
+	/** @var array */
+	private $characterSets;
 
-    /**
-     * @param array $characterSets Array of allowed character sets.
-     */
-    public function __construct(array $characterSets = ["utf8mb4_general_ci", "ascii_general_ci"])
-    {
-        $this->characterSets = $characterSets;
-    }
+	/**
+	 * @param array $characterSets Array of allowed character sets.
+	 */
+	function AdminerCollations(array $characterSets = array('utf8mb4_general_ci', 'utf8_unicode_ci'))
+	{
+		$this->characterSets = $characterSets;
+	}
 
-    /**
-     * Prints HTML code inside <head>.
-     */
-    public function head()
-    {
-        if (empty($this->characterSets)) {
-            return;
-        }
+	/**
+	 * Prints HTML code inside <head>.
+	 * @return null
+	 */
+	public function head()
+	{
+		if (empty($this->characterSets)) {
+			return;
+		}
 
-        ?>
+		?>
 
-        <script <?php echo nonce(); ?>>
-            (function(document) {
-                "use strict";
+		<script>
+			(function(window) {
+				"use strict";
 
-                const characterSets = [
-                    <?php
-                        echo "'(" . lang('collation') . ")'";
+				const selectNamePattern = /^([cC]ollation|fields\[[0-9]+]\[collation])$/;
 
-                        foreach ($this->characterSets as $characterSet) {
-                            echo ", '" . $characterSet . "'";
-                        }
-                    ?>
-                ];
+				const characterSets = [
+					<?php
+						echo "'(" . lang('collation') . ")'";
 
-                document.addEventListener("DOMContentLoaded", init, false);
+						foreach ($this->characterSets as $characterSet) {
+							echo ", '" . $characterSet . "'";
+						}
+					?>
+				];
 
-                function init() {
-                    var selects = document.querySelectorAll("select[name='Collation'], select[name*='collation']");
+				window.addEventListener("load", function () {
+					replaceCollations();
+				}, false);
 
-                    for (var i = 0; i < selects.length; i++) {
-                        replaceOptions(selects[i]);
-                    }
-                }
+				function replaceCollations() {
+					var selects = document.getElementsByTagName("select");
 
-                function replaceOptions(select) {
-                    var selectedSet = getSelectedSet(select);
-                    var html = '';
-                    var hasSelected = false;
+					for (var i = 0; i < selects.length; i++) {
+						if (selectNamePattern.test(selects[i].name)) {
+							replaceOptions(selects[i]);
+						}
+					}
+				}
 
-                    for (var i = 0; i < characterSets.length; i++) {
-                        if (characterSets[i] === selectedSet) {
-                            hasSelected = true;
-                            html += '<option selected="selected">' + characterSets[i] + '</option>';
-                        } else {
-                            html += '<option>' + characterSets[i] + '</option>';
-                        }
-                    }
+				function replaceOptions(select) {
+					var selectedSet = getSelectedSet(select);
+					var html = '';
+					var hasSelected = false;
 
-                    if (!hasSelected && selectedSet !== "") {
-                        html += '<option selected="selected">' + selectedSet + '</option>';
-                    }
+					for (var i = 0; i < characterSets.length; i++) {
+						if (characterSets[i] == selectedSet) {
+							hasSelected = true;
+							html += '<option selected="selected">' + characterSets[i] + '</option>';
+						} else {
+							html += '<option>' + characterSets[i] + '</option>';
+						}
+					}
 
-                    select.innerHTML = html;
-                }
+					if (!hasSelected && selectedSet !== "") {
+						html += '<option selected="selected">' + selectedSet + '</option>';
+					}
 
-                function getSelectedSet(select) {
-                    var options = select.getElementsByTagName("option");
+					select.innerHTML = html;
+				}
 
-                    for (var i = 0; i < options.length; i++) {
-                        if (options[i].selected) {
-                            return options[i].innerHTML.trim();
-                        }
-                    }
+				function getSelectedSet(select) {
+					var options = select.getElementsByTagName("option");
 
-                    return "";
-                }
-            })(document);
+					for (var i = 0; i < options.length; i++) {
+						if (options[i].selected) {
+							return options[i].innerHTML.trim();
+						}
+					}
 
-        </script>
+					return "";
+				}
+			})(window);
 
-        <?php
-    }
+		</script>
+
+		<?php
+	}
 }
